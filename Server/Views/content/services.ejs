@@ -1,0 +1,16 @@
+
+<div class="container pt-5">
+    <div class="fs-2 text-white text-center">Services</div>
+    <div class="row">
+            <% for (var i = 0; i < services.length ; i++) {%>
+                <div class="col">
+                    <div class="card m-5 " style="width: 18rem;">
+                        <img src="<%= services[i].image %>" class="card-img-top p-3 img-fluid w-50 mx-auto d-block" alt="..." >
+                        <div class="card-body">
+                            <h5 class="card-title text-center"><%= services[i].name %> </h5>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+    </div>
+</div>

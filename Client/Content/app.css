@@ -1,0 +1,38 @@
+/* your custom css goes here */
+
+.bg-dark {
+    background-color: #212529;
+}
+
+.body-text-color {
+    color: #adb5bd;
+}
+
+.min-100 {
+    min-height: 100%;
+}
+
+.aboutImage {
+    height: 50vh!important;
+}
+
+.aboutImage img {
+    height: 100%;
+}
+
+#about-container {
+    height: 100vh;
+}
+
+.btn-warning:hover {
+    color: #b88c09;
+    background-color: ghostwhite;
+    border-color: ghostwhite;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+body {
+    height: 100vh!important;
+    background-color: #2d2e2f!important;
+}

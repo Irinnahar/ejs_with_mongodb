@@ -1,0 +1,20 @@
+
+<div class="pb-5 ">
+    <div class="container pt-5">
+        <div class="fs-2 text-center text-white">Projects</div>
+        <div class="row">
+                <% for (var i = 0; i < projectList.length ; i++) {%>
+                    <div class="col">
+                        <div class="card m-5 " style="width: 18rem;">
+                            <img src="<%= projectList[i].image %>" class="card-img-top p-3 img-fluid" alt="..." style="height: 130px">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= projectList[i].name %> </h5>
+                                <p class="card-text"><%= projectList[i].description %></p>
+                                <a href="<%= projectList[i].link %>" class="btn btn-warning fw-bold">Click Here</a>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+        </div>
+    </div>
+</div>
