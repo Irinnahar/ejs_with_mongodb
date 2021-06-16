@@ -1,3 +1,12 @@
+/*
+File name : app.ts
+Student’s Name : Irin Nahar
+StudentID: 301173198
+Date: 16/06/2021
+course : COMP 229
+lab: Assignment 2 
+*/
+
 import createError from 'http-errors';
 import express from 'express';
 import path from 'path';
@@ -10,6 +19,7 @@ import contactRouter from '../Routes/contact';
 
 // Express Web App Configuration
 const app = express();
+
 export default app; // exports app as the default Object for this module
 
 // DB Configuration

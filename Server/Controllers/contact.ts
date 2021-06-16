@@ -1,3 +1,12 @@
+/*
+File name : contact.ts
+Student’s Name : Irin Nahar
+StudentID: 301173198
+Date: 16/06/2021
+course : COMP 229
+lab: Assignment 2 
+*/
+
 import express, {Response, Request, NextFunction} from 'express';
 import Contacts from '../Models/contact';
 
@@ -8,9 +17,9 @@ export function DisplayContactListPage(req: Request, res: Response, next: NextFu
            return console.error.bind(error);
        } else {
             res.render('index', { title: 'Contact List' , page: 'contact-list', contact : contactCollection });
-            console.log(contactCollection);
+            //console.log(contactCollection);
     }
-   }) 
+   }).sort({"name" : 1})
 }
 
 //contact edit page display

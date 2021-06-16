@@ -12,9 +12,8 @@ function DisplayContactListPage(req, res, next) {
         }
         else {
             res.render('index', { title: 'Contact List', page: 'contact-list', contact: contactCollection });
-            console.log(contactCollection);
         }
-    });
+    }).sort({ "name": 1 });
 }
 exports.DisplayContactListPage = DisplayContactListPage;
 function DisplayContactEditPage(req, res, next) {

@@ -1,3 +1,12 @@
+/*
+File name : index.ts
+Student’s Name : Irin Nahar
+StudentID: 301173198
+Date: 16/06/2021
+course : COMP 229
+lab: Assignment 2 
+*/
+
 import express, {Request, Response, NextFunction} from 'express';
 
 export function DisplayHomePage(req: Request, res : Response, next: NextFunction) {
