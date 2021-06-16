@@ -26,8 +26,13 @@
             <input id="message" type="text" class="form-control" placeholder="Message" aria-label="Message" aria-describedby="Message"
             name="message" value="<%= contact.message %>" required>
         </div>
-
-        <button type="submit" class="btn btn-primary" id="editButton"><i class="fas fa-edit fa-lg"></i> Edit</button>
+        <% if(title == "Edit") { %>
+            <button type="submit" id="editButton" class="btn btn-primary"><i class="fas fa-edit fa-lg"></i> Edit</button>
+        <% } else { %>
+            <button type="submit" id="addButton" class="btn btn-primary"><i class="fas fa-plus-circle fa-lg"></i> Add</button>
+        <% } %>  
+        <a href="/contact-list/delete/<%= contact._id %>" class="btn btn-danger delete" ><i class="fas fa-trash-alt fa-sm"></i> Delete</a> 
+        <a href="/contact-list" id="cancelButton" type="button" class="btn btn-warning"><i class="fas fa-undo"></i> Cancel</a>
         
     </form>
 </div>

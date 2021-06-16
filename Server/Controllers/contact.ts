@@ -27,3 +27,47 @@ export function DisplayContactEditPage(req: Request, res: Response, next: NextFu
         }
     })
 }
+
+// proccess edit page
+export function ProcessEditPage(req: Request, res: Response, next: NextFunction): void
+{
+    let id = req.params.id;
+
+    // instantiate a new Clothing Item
+    let updateContact = new Contacts
+    ({
+      "_id": id,
+      "name": req.body.name,
+      "email": req.body.email,
+      "phone": req.body.phone,
+      "message": req.body.message
+    });
+  
+    // find the contact item via db.contacts.update({"_id":id}) and then update
+    Contacts.updateOne({_id: id}, updateContact, {}, (error) =>{
+      if(error)
+      {
+        console.error(error);
+        res.end(error);
+      }
+  
+      res.redirect('/contact-list');
+    });
+}
+
+// Process Delete page
+export function ProcessDeletePage(req: Request, res: Response, next: NextFunction): void
+{
+    let id = req.params.id;
+
+  // db.clothing.remove({"_id: id"})
+  Contacts.remove({_id: id}, (error) => {
+    if(error)
+    {
+      console.error(error);
+      res.end(error);
+    }
+
+    res.redirect('/contact-list');
+  });
+}
