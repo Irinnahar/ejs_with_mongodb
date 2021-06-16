@@ -1,40 +1,29 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, {Response, Request, NextFunction} from 'express';
+import Contacts from '../Models/contact';
 
-import contact from "../Models/contact";
-
-export function DisplaycontactListPage(req: Request, res: Response, next: NextFunction): void
-{
-    console.log(contact)
-    contact.find(function(err, contactCollection){
-        if(err)
-        {
-            return console.error(err);
-        }
-
-        // render the contact-list content partial page
-        console.log(contactCollection);
-        res.render('index', {title: 'contact List', page: 'contact-list', contact: contactCollection})
-    });
+// contact list page display
+export function DisplayContactListPage(req: Request, res: Response, next: NextFunction) {
+   Contacts.find(function(error , contactCollection){
+       if(error) {
+           return console.error.bind(error);
+       } else {
+            res.render('index', { title: 'Contact List' , page: 'contact-list', contact : contactCollection });
+            console.log(contactCollection);
+    }
+   }) 
 }
 
-export function DisplayEditPage(req: Request, res: Response, next: NextFunction): void
-{
+//contact edit page display
+export function DisplayContactEditPage(req: Request, res: Response, next: NextFunction): void {
     let id = req.params.id;
-
     console.log(id);
 
-    // pass the id to the db
-
-    //db.contact.find({"_id": id})
-    contact.findById(id, {}, {}, (err, contactItemToEdit) => 
-    {
-        if(err)
-        {
-            console.error(err);
-            res.end(err);
+    Contacts.findById(id, {}, {}, (error, contactToEdit) => {
+        if(error) {
+            console.error(error);
+            res.end(error);
+        } else {
+            res.render('index', { title: 'Edit' , page: 'edit', contact : contactToEdit});
         }
-
-        // show the edit view
-        res.render('index', {title: 'Edit', page: 'edit', item: contactItemToEdit});
-    });
+    })
 }

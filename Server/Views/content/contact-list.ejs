@@ -1,44 +1,17 @@
-<h1 class="text-white pt-5" >Contact List</h1>
+<h2 class="pt-5 text-white pb-3">Contact List</h2>
 
 <div class="row">
     <div class="col">
 
         <!-- Table goes here -->
-<table class="table table-light table-striped">
+        <table class="table table-light w-100">
             <thead>
-                <tr scope="row">
-                    <th scope="col">No</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Message</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% for (var i = 0; i < contact.length ; i++) { %>
-                <tr scope="row">  
-                
-                    <th scope="col"><%= i + 1 %> </th>
-                    <td scope="col"><%= contact[i].name %></td>
-                    <td scope="col"><%= contact[i].phone %></td>
-                    <td scope="col"><%= contact[i].email %></td>
-                    <td scope="col"><%= contact[i].message %></td>
-                    <td scope="col"><button type="button" class="btn btn-primary">Edit</button></td>
-                    <td scope="col"><button type="button" class="btn btn-danger">Delete</button></td>
-                </tr>
-                <% } %>                     
-            
-            </tbody>                   
-        </table>            <thead>
               <tr>
-                <th scope="col">#</th>
+                <th scope="col">No</th>
                 <th scope="col">Name</th>
-                <th scope="col">Brand</th>
-                <th scope="col">Category</th>
-                <th scope="col">Colour</th>
-                <th scope="col">Size</th>
-                <th scope="col">Price</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -46,20 +19,19 @@
               <!-- Repeatable Row Template -->  
 
               <% for(let count = 0; count < contact.length; count++) { %>
-
               <tr>
                 <th scope="row"><%= count + 1 %></th>
                 <td><%= contact[count].name %></td>
-                <td><%= contact[count].brand %></td>
-                <td><%= contact[count].category %></td>
-                <td><%= contact[count].colour %></td>
-                <td><%= contact[count].size %></td>
-                <td><%= contact[count].price %></td>
+                <td><%= contact[count].email %></td>
+                <td><%= contact[count].phone %></td>
+                <td class="text-center"><a href="/contact-list/edit/<%= contact[count]._id %>" class="btn btn-primary btn-sm edit"><i class="fas fa-edit fa-sm"></i> Edit</a></td>
+                <td class="text-center"><a href="/contact-list/delete/<%= contact[count]._id %>" class="btn btn-danger btn-sm delete"><i class="fas fa-trash-alt fa-sm"></i> Delete</a></td>                   
               </tr>
-
               <% } %>
               
             </tbody>
           </table>
     </div>
 </div>
+
+
