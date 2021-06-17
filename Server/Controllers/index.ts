@@ -17,15 +17,16 @@ import User from '../Models/user';
 import { UserDisplayName } from '../Util';
 
 export function DisplayHomePage(req: Request, res : Response, next: NextFunction) {
-    res.render('index', { title: 'Home', page: 'home' });
+    res.render('index', { title: 'Home', page: 'home', displayName: UserDisplayName(req) });
 }
 
 export function DisplayAboutPage (req: Request, res: Response, next: NextFunction) {
-    res.render('index', { title: 'About' , page: 'about'});
+    res.render('index', { title: 'About' , page: 'about', displayName: UserDisplayName(req)});
 }
 
 export function DisplayProjectPage (req: Request, res: Response, next: NextFunction) {
     res.render('index', { 
+        displayName: UserDisplayName(req),
         title: 'Projects', 
         page: "projects",
         projectList: [
@@ -40,6 +41,7 @@ export function DisplayProjectPage (req: Request, res: Response, next: NextFunct
 export function DisplayServicesPage (req: Request, res: Response, next: NextFunction) 
 {
     res.render('index', { 
+        displayName: UserDisplayName(req),
         title: 'Services', 
         page: 'services' ,
         services: [
@@ -51,94 +53,94 @@ export function DisplayServicesPage (req: Request, res: Response, next: NextFunc
 }
 
 export function DisplayContactsPage (req: Request, res: Response, next: NextFunction) {
-    res.render('index', { title: 'Contact', page: 'contact' });}
+    res.render('index', { title: 'Contact', page: 'contact', displayName: UserDisplayName(req) });}
 
-    export function DisplayLoginPage(req: Request, res: Response, next: NextFunction): void
+export function DisplayLoginPage(req: Request, res: Response, next: NextFunction): void
+{
+    if(!req.user)
     {
-        if(!req.user)
-        {
-            return res.render('index', { title: 'Login', page: 'login', messages: req.flash('loginMessage'), displayName: UserDisplayName(req)  });
-        }
-    
-        return res.redirect('/contact-list');
+        return res.render('index', { title: 'Login', page: 'login', messages: req.flash('loginMessage'), displayName: UserDisplayName(req)  });
     }
+
+    return res.redirect('/contact-list');
+}
     
-    export function ProcessLoginPage(req: Request, res: Response, next: NextFunction): void
-    {
-        passport.authenticate('local', (err, user, info) => {
-            // are there server errors?
+export function ProcessLoginPage(req: Request, res: Response, next: NextFunction): void
+{
+    passport.authenticate('local', (err, user, info) => {
+        // are there server errors?
+        if(err)
+        {
+            console.error(err);
+            return next(err);
+        }
+
+        // are there login errors?
+        if(!user)
+        {
+            req.flash('loginMessage', 'Authentication Error');
+            return res.redirect('/login');
+        }
+
+        req.login(user, (err) =>
+        // are there db errors?
+        {
             if(err)
             {
                 console.error(err);
                 return next(err);
             }
-    
-            // are there login errors?
-            if(!user)
-            {
-                req.flash('loginMessage', 'Authentication Error');
-                return res.redirect('/login');
-            }
-    
-            req.login(user, (err) =>
-            // are there db errors?
-            {
-                if(err)
-                {
-                    console.error(err);
-                    return next(err);
-                }
-    
-                return res.redirect('/contact-list');
-    
-            });
-        })(req, res, next);
-    }
-    
-    export function DisplayRegisterPage(req: Request, res: Response, next: NextFunction): void
+
+            return res.redirect('/contact-list');
+
+        });
+    })(req, res, next);
+}
+
+export function DisplayRegisterPage(req: Request, res: Response, next: NextFunction): void
+{
+    if(!req.user)
     {
-        if(!req.user)
+        return res.render('index', { title: 'Register', page: 'register', messages: req.flash('registerMessage'), displayName: UserDisplayName(req)  });
+    }
+
+    return res.redirect('/contact-list');
+}
+
+export function ProcessRegisterPage(req: Request, res: Response, next: NextFunction): void
+{
+    // instantiate a new User Object
+    let newUser = new User
+    ({
+        username: req.body.username,
+        emailAddress: req.body.emailAddress,
+        displayName: req.body.FirstName + " " + req.body.LastName
+    });
+
+    User.register(newUser, req.body.password, (err) =>
+    {
+        if(err)
         {
-            return res.render('index', { title: 'Register', page: 'register', messages: req.flash('registerMessage'), displayName: UserDisplayName(req)  });
+            console.error('Error: Inserting New User');
+            if(err.name == "UserExistsError")
+            {
+                console.error('Error: User Already Exists');
+            }
+            req.flash('registerMessage', 'Registration Error');
+
+            return res.redirect('/register');
         }
 
-        return res.redirect('/contact-list');
-    }
-    
-    export function ProcessRegisterPage(req: Request, res: Response, next: NextFunction): void
-    {
-        // instantiate a new User Object
-        let newUser = new User
-        ({
-            username: req.body.username,
-            emailAddress: req.body.emailAddress,
-            displayName: req.body.FirstName + " " + req.body.LastName
+        // after successful registration - login the user
+        return passport.authenticate('local')(req, res, () =>{
+            return res.redirect('/contact-list');
         });
+    });
+}
     
-        User.register(newUser, req.body.password, (err) =>
-        {
-            if(err)
-            {
-                console.error('Error: Inserting New User');
-                if(err.name == "UserExistsError")
-                {
-                    console.error('Error: User Already Exists');
-                }
-                req.flash('registerMessage', 'Registration Error');
-    
-                return res.redirect('/register');
-            }
-    
-            // after successful registration - login the user
-            return passport.authenticate('local')(req, res, () =>{
-                return res.redirect('/contact-list');
-            });
-        });
-    }
-    
-    export function ProcessLogoutPage(req: Request, res: Response, next: NextFunction): void
-    {
-        req.logout();
-    
-        res.redirect('/login');
-    }
+export function ProcessLogoutPage(req: Request, res: Response, next: NextFunction): void
+{
+    req.logout();
+
+    res.redirect('/login');
+}

@@ -5,15 +5,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProcessDeletePage = exports.ProcessEditPage = exports.DisplayContactEditPage = exports.DisplayContactListPage = void 0;
 const contact_1 = __importDefault(require("../Models/contact"));
+const Util_1 = require("../Util");
 function DisplayContactListPage(req, res, next) {
     contact_1.default.find(function (error, contactCollection) {
         if (error) {
             return console.error.bind(error);
         }
         else {
-            res.render('index', { title: 'Contact List', page: 'contact-list', contact: contactCollection });
+            res.render('index', { title: 'Contact List', page: 'contact-list', contact: contactCollection, displayName: Util_1.UserDisplayName(req) });
         }
-    }).sort({ "name": 1 });
+    });
 }
 exports.DisplayContactListPage = DisplayContactListPage;
 function DisplayContactEditPage(req, res, next) {
@@ -25,7 +26,7 @@ function DisplayContactEditPage(req, res, next) {
             res.end(error);
         }
         else {
-            res.render('index', { title: 'Edit', page: 'edit', contact: contactToEdit });
+            res.render('index', { title: 'Edit', page: 'edit', contact: contactToEdit, displayName: Util_1.UserDisplayName(req) });
         }
     });
 }

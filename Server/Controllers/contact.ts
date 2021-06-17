@@ -9,6 +9,7 @@ lab: Assignment 2
 
 import express, {Response, Request, NextFunction} from 'express';
 import Contacts from '../Models/contact';
+import { UserDisplayName } from '../Util';
 
 // contact list page display
 export function DisplayContactListPage(req: Request, res: Response, next: NextFunction) {
@@ -16,10 +17,10 @@ export function DisplayContactListPage(req: Request, res: Response, next: NextFu
        if(error) {
            return console.error.bind(error);
        } else {
-            res.render('index', { title: 'Contact List' , page: 'contact-list', contact : contactCollection });
+            res.render('index', { title: 'Contact List' , page: 'contact-list', contact : contactCollection, displayName: UserDisplayName(req) });
             //console.log(contactCollection);
     }
-   }).sort({"name" : 1})
+   })
 }
 
 //contact edit page display
@@ -32,7 +33,7 @@ export function DisplayContactEditPage(req: Request, res: Response, next: NextFu
             console.error(error);
             res.end(error);
         } else {
-            res.render('index', { title: 'Edit' , page: 'edit', contact : contactToEdit});
+            res.render('index', { title: 'Edit' , page: 'edit', contact : contactToEdit, displayName: UserDisplayName(req) });
         }
     })
 }
