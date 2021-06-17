@@ -8,20 +8,21 @@ lab: Assignment 2
 */
 
 import express from 'express';
+import { DisplayContactListPage, DisplayContactEditPage, ProcessDeletePage, ProcessEditPage } from '../Controllers/contact';
 const router = express.Router();
 export default router;
 
 // create an contact controller instance
-import * as controller from '../Controllers/contact';
+import { AuthGuard } from '../Util/index';
 
 /* GET contact-list page - with /contact-list */
-router.get('/', controller.DisplayContactListPage);
+router.get('/', DisplayContactListPage);
 
 /* display edit/:id page - with /contact-list/edit:id */
-router.get('/edit/:id', controller.DisplayContactEditPage);
+router.get('/edit/:id', AuthGuard, DisplayContactEditPage);
 
 //Delete the contact
-router.get('/delete/:id', controller.ProcessDeletePage);
+router.get('/delete/:id', AuthGuard,  ProcessDeletePage);
 
 // edit the form in database
-router.post('/edit/:id', controller.ProcessEditPage)
+router.post('/edit/:id', AuthGuard, ProcessEditPage)

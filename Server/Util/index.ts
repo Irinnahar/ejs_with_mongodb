@@ -14,6 +14,7 @@ export function UserDisplayName(req: Request): string
 
 export function AuthGuard(req: Request, res: Response, next: NextFunction): void
 {
+    console.log(req.isAuthenticated());
     if(!req.isAuthenticated())
     {
         return res.redirect('/login');
