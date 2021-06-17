@@ -1,11 +1,11 @@
 {
-    "name": "comp229-m2021-week4",
+    "name": "Express Authentication",
     "version": "0.0.3",
     "private": true,
-    "description": "Demo Project for COMP229 - Week 5",
+    "description": "",
     "main": "index.js",
-    "repository": "https://github.com/CentennialCollege/COMP229-M2021-Week5c.git",
-    "author": "Tom Tsiliopoulos <tsiliopoulos@hotmail.com>",
+    "repository": "https://github.com/Irinnahar/ejs_with_mongodb",
+    "author": "Irin Nahar",
     "license": "MIT",
     "scripts": {
         "start": "node index.js"

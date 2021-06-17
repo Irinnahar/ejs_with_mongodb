@@ -11,7 +11,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Phone</th>
-                <th scope="col">Action</th>
+                <% if(displayName) { %><th scope="col">Action</th> <% } %>
               </tr>
             </thead>
             <tbody>
@@ -19,18 +19,19 @@
               <!-- Repeatable Row Template -->  
 
               <% for(let count = 0; count < contact.length; count++) { %>
-              <tr class="text-left">
-                <th scope="row"><%= count + 1 %></th>
-                <td><%= contact[count].name %></td>
-                <td><%= contact[count].email %></td>
-                <td><%= contact[count].phone %></td>
-                <td >
-                  <a href="/contact-list/edit/<%= contact[count]._id %>" class="btn btn-primary btn-sm edit"><i class="fas fa-edit fa-sm"></i> Edit</a>
-                  <a href="/contact-list/delete/<%= contact[count]._id %>" class="btn btn-danger btn-sm delete" ><i class="fas fa-trash-alt fa-sm"></i> Delete</a>
-                </td>
-              </tr>
-              <% } %>
-              
+                <tr class="text-left">
+                  <th scope="row"><%= count + 1 %></th>
+                  <td><%= contact[count].name %></td>
+                  <td><%= contact[count].email %></td>
+                  <td><%= contact[count].phone %></td>
+                  <% if(displayName) { %>
+                    <td >
+                      <a href="/contact-list/edit/<%= contact[count]._id %>" class="btn btn-primary btn-sm edit"><i class="fas fa-edit fa-sm"></i> Edit</a>
+                      <a href="/contact-list/delete/<%= contact[count]._id %>" class="btn btn-danger btn-sm delete" ><i class="fas fa-trash-alt fa-sm"></i> Delete</a>
+                    </td>
+                  <% } %>
+                </tr>   
+              <% } %>          
             </tbody>
           </table>
     </div>
