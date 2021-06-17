@@ -51,6 +51,23 @@ function DisplayLoginPage(req, res, next) {
 }
 exports.DisplayLoginPage = DisplayLoginPage;
 function ProcessLoginPage(req, res, next) {
+    passport_1.default.authenticate('local', (err, user, info) => {
+        if (err) {
+            console.error(err);
+            return next(err);
+        }
+        if (!user) {
+            req.flash('loginMessage', 'Authentication Error');
+            return res.redirect('/login');
+        }
+        req.login(user, (err) => {
+            if (err) {
+                console.error(err);
+                return next(err);
+            }
+            return res.redirect('/contact-list');
+        });
+    })(req, res, next);
 }
 exports.ProcessLoginPage = ProcessLoginPage;
 function DisplayRegisterPage(req, res, next) {

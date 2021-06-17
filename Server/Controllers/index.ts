@@ -65,7 +65,34 @@ export function DisplayContactsPage (req: Request, res: Response, next: NextFunc
     
     export function ProcessLoginPage(req: Request, res: Response, next: NextFunction): void
     {
-        
+        passport.authenticate('local', (err, user, info) => {
+            // are there server errors?
+            if(err)
+            {
+                console.error(err);
+                return next(err);
+            }
+    
+            // are there login errors?
+            if(!user)
+            {
+                req.flash('loginMessage', 'Authentication Error');
+                return res.redirect('/login');
+            }
+    
+            req.login(user, (err) =>
+            // are there db errors?
+            {
+                if(err)
+                {
+                    console.error(err);
+                    return next(err);
+                }
+    
+                return res.redirect('/contact-list');
+    
+            });
+        })(req, res, next);
     }
     
     export function DisplayRegisterPage(req: Request, res: Response, next: NextFunction): void
