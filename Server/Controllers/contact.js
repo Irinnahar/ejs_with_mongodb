@@ -13,6 +13,7 @@ function DisplayContactListPage(req, res, next) {
         }
         else {
             res.render('index', { title: 'Contact List', page: 'contact-list', contact: contactCollection, displayName: Util_1.UserDisplayName(req) });
+            console.log(contactCollection);
         }
     });
 }

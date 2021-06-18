@@ -18,7 +18,7 @@ export function DisplayContactListPage(req: Request, res: Response, next: NextFu
            return console.error.bind(error);
        } else {
             res.render('index', { title: 'Contact List' , page: 'contact-list', contact : contactCollection, displayName: UserDisplayName(req) });
-            //console.log(contactCollection);
+            console.log(contactCollection);
     }
    })
 }
